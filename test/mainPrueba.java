@@ -21,7 +21,7 @@ public class mainPrueba {
         AvionSingleton avion = AvionSingleton.getAvion();
 
         do {
-
+            System.out.println("Hay " + avion.getAsientos());
             System.out.println("""
                                1. Comprar billetes
                                2. Cancelar billetes
@@ -30,10 +30,14 @@ public class mainPrueba {
             opcion = bi.nextInt();
             switch (opcion) {
                 case 1:
-                    
+                    System.out.println("¿Cuántos billetes quiere comprar?: ");
+                    billetes = bi.nextInt();
+                    user.comprarVuelos(billetes);
                     break;
                 case 2:
-
+                    System.out.println("¿Cuántos billetes quiere cancelar?: ");
+                    billetes = bi.nextInt();
+                    iberia.eliminarAsientos(billetes);
                     break;
                 case 0:
                     salir = true;

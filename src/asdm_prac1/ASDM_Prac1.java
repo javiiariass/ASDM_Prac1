@@ -4,18 +4,55 @@
  */
 package asdm_prac1;
 
+import Aerolinea.*;
+import java.awt.BorderLayout;
+import java.awt.MediaTracker;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author javiiariass
  */
 public class ASDM_Prac1 extends javax.swing.JFrame {
+
+    // En esta practica solo interactuamos con avion a traves de las otras clases
+    // No es necesario en esta práctica
+    //AvionSingleton avion = AvionSingleton.getAvion(); 
+    Usuario usuario = new Usuario();
+    Agencia airUHU = new Agencia();
+
     /**
      * Inicializacion de componentes que no haga initComponents
-     * 
      */
-    private void iniciaComponentes(){
+    private void iniciaComponentes() {
+
+        // Cargamos Imágenes
+        BufferedImage imagenLogo = cargadorImagenes("resources/images/airUHU_Escalado.png");
+        BufferedImage imagenMaleta = cargadorImagenes("resources/images/maleta.png");
+        BufferedImage imagenAzafata = cargadorImagenes("resources/images/azafata.png");
+
+        if (imagenLogo == null || imagenMaleta == null || imagenAzafata == null) {
+            System.err.println("Error: No se pudieron cargar las imágenes");
+            return;
+        }
+
+        //imagenAux= (BufferedImage) imagenAux.getScaledInstance(escaladoX, escaladoY, 1);
+        anyadeImagenes(panelLogo, imagenLogo);
+        anyadeImagenes(panelCliente, imagenMaleta);
+        anyadeImagenes(panelAzafata, imagenAzafata);
+
         setVisible(true);
-    };
+    }
+
     /**
      * Creates new form ASDM_Prac1
      */
@@ -33,21 +70,196 @@ public class ASDM_Prac1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        contenedorAvion = new canvasAvion(cargadorImagenes("resources/images/Avion.png"));
+        panelDerecho = new javax.swing.JPanel();
+        panelLogo = new javax.swing.JPanel();
+        panelContenedor = new javax.swing.JPanel();
+        botonCompra = new javax.swing.JButton();
+        botonVende = new javax.swing.JButton();
+        panelCliente = new javax.swing.JPanel();
+        panelAzafata = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("airUHU");
+        setLocation(new java.awt.Point(500, 300));
+        setResizable(false);
+
+        javax.swing.GroupLayout contenedorAvionLayout = new javax.swing.GroupLayout(contenedorAvion);
+        contenedorAvion.setLayout(contenedorAvionLayout);
+        contenedorAvionLayout.setHorizontalGroup(
+            contenedorAvionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 312, Short.MAX_VALUE)
+        );
+        contenedorAvionLayout.setVerticalGroup(
+            contenedorAvionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 390, Short.MAX_VALUE)
+        );
+
+        panelLogo.setPreferredSize(new java.awt.Dimension(186, 78));
+
+        javax.swing.GroupLayout panelLogoLayout = new javax.swing.GroupLayout(panelLogo);
+        panelLogo.setLayout(panelLogoLayout);
+        panelLogoLayout.setHorizontalGroup(
+            panelLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelLogoLayout.setVerticalGroup(
+            panelLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 78, Short.MAX_VALUE)
+        );
+
+        botonCompra.setText("Comprar Billetes");
+        botonCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCompraActionPerformed(evt);
+            }
+        });
+
+        botonVende.setText("Cancelar billetes");
+        botonVende.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVendeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelClienteLayout = new javax.swing.GroupLayout(panelCliente);
+        panelCliente.setLayout(panelClienteLayout);
+        panelClienteLayout.setHorizontalGroup(
+            panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 58, Short.MAX_VALUE)
+        );
+        panelClienteLayout.setVerticalGroup(
+            panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelAzafata.setPreferredSize(new java.awt.Dimension(79, 100));
+
+        javax.swing.GroupLayout panelAzafataLayout = new javax.swing.GroupLayout(panelAzafata);
+        panelAzafata.setLayout(panelAzafataLayout);
+        panelAzafataLayout.setHorizontalGroup(
+            panelAzafataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 79, Short.MAX_VALUE)
+        );
+        panelAzafataLayout.setVerticalGroup(
+            panelAzafataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelContenedorLayout = new javax.swing.GroupLayout(panelContenedor);
+        panelContenedor.setLayout(panelContenedorLayout);
+        panelContenedorLayout.setHorizontalGroup(
+            panelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenedorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(botonVende, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenedorLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(panelAzafata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenedorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
+        );
+        panelContenedorLayout.setVerticalGroup(
+            panelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenedorLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(panelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelAzafata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(botonVende)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout panelDerechoLayout = new javax.swing.GroupLayout(panelDerecho);
+        panelDerecho.setLayout(panelDerechoLayout);
+        panelDerechoLayout.setHorizontalGroup(
+            panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDerechoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        panelDerechoLayout.setVerticalGroup(
+            panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDerechoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(contenedorAvion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelDerecho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelDerecho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(contenedorAvion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompraActionPerformed
+        int billetes = pedirDatoNum("comprar");
+        int salida = usuario.comprarVuelos(billetes);
+        String outputDialogo;
+
+        switch (salida) {
+            case -1:
+                outputDialogo = "No hay más billetes por comprar";
+                break;
+            case 0:
+                outputDialogo = "Se han comprado " + billetes + " billetes";
+                break;
+            default:
+                outputDialogo = "Solo se han podido comprar " + salida + " billetes";
+
+        }
+        repaint();
+        JOptionPane.showMessageDialog(null, outputDialogo);
+    }//GEN-LAST:event_botonCompraActionPerformed
+
+    private void botonVendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVendeActionPerformed
+        int billetes = pedirDatoNum("cancelar");
+        int salida = airUHU.eliminarAsientos(billetes);
+        String outputDialogo;
+
+        switch (salida) {
+            case -1:
+                outputDialogo = "No hay más billetes por cancelar";
+                break;
+            case 0:
+                outputDialogo = "Se han cancelado " + billetes + " billetes";
+                break;
+            default:
+                outputDialogo = "Solo se han podido cancelar " + salida + " billetes";
+
+        }
+        repaint();
+        JOptionPane.showMessageDialog(null, outputDialogo);
+    }//GEN-LAST:event_botonVendeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,6 +290,99 @@ public class ASDM_Prac1 extends javax.swing.JFrame {
         ASDM_Prac1 frame = new ASDM_Prac1();
     }
 
+    /**
+     * Anyade la imagen pasada por parametro al Jpanel
+     * @param panel JPanel al que anyadir la imagen
+     * @param imagen imagen a anyadir
+     */
+    private void anyadeImagenes(JPanel panel, BufferedImage imagen) {
+        JLabel capa = new JLabel(new ImageIcon(imagen));
+
+        panel.setLayout(new BorderLayout());
+        panel.add(capa, BorderLayout.CENTER);
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    /**
+     * Carga la imagen pasada por parametro
+     *
+     * @param rutaImagen ruta de la imagen<br>
+     * En rutas relativas empezar ubicandose en la carpeta raiz del proyecto
+     * @return objeto tipo BufferedImage con la imagen de la ruta pasada por
+     * parámetro<br>
+     * También puede devolver null si hay algún error en el proceso
+     */
+    private BufferedImage cargadorImagenes(String rutaImagen) {
+        try {
+
+            if (!new File(rutaImagen).exists()) {
+                throw new IOException("El archivo no existe");
+            }
+
+            BufferedImage imagen = ImageIO.read(new File(rutaImagen));
+            //avionImagen = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../../resources/images/airUHU.png"));
+            //Para que no pinte hasta que la imagen no esté cargada
+            MediaTracker tracker = new MediaTracker(this);
+
+            tracker.addImage(imagen, 0);
+            //Esperamos a que estén todas cargadas
+            tracker.waitForAll();
+            return imagen;
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(ASDM_Prac1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    /**
+     * Abre una ventana emergente y pide un entero positivo. <br>
+     * Si el valor no es correcto, solicita de nuevo hasta que el dato sea
+     * correcto o el usuario cancele.
+     *
+     * @param indica la accion -> "comprar" || "cancelar"
+     * @return devuelve el valor entero positivo
+     */
+    private int pedirDatoNum(String opcion) {
+        String entrada;
+        boolean entradaValida = false;
+        int numero;
+        do {
+
+            entrada = JOptionPane.showInputDialog(null, "Por favor, introduce los billetes que desea " + opcion + ":");
+
+            try {
+                if (entrada == null) {
+                    // El usuario ha pulsado "Cancelar" o ha cerrado el cuadro de diálogo
+                    JOptionPane.showMessageDialog(null, "Operación cancelada.");
+                    numero = -1;
+                } else {
+                    numero = Integer.parseInt(entrada);
+                    if (numero < 0) {
+                        throw new NumberFormatException();
+                    }
+                    entradaValida = true;
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Entrada no válida. Por favor, introduce número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                numero = -1;
+            }
+
+        } while (!entradaValida && entrada != null);
+
+        return numero;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCompra;
+    private javax.swing.JButton botonVende;
+    private javax.swing.JPanel contenedorAvion;
+    private javax.swing.JPanel panelAzafata;
+    private javax.swing.JPanel panelCliente;
+    private javax.swing.JPanel panelContenedor;
+    private javax.swing.JPanel panelDerecho;
+    private javax.swing.JPanel panelLogo;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,11 +14,12 @@ public final class AvionSingleton {
     
     // Atributos de clase
     private static int asientos;
+    private static final int ASIENTOS_MAXIMOS = 180;
     
     
     // Constructor privado que no permita instanciarlo
     private AvionSingleton(){
-        avion.asientos = 180;
+        asientos = ASIENTOS_MAXIMOS;
     }
     
     public static AvionSingleton getAvion(){
@@ -28,29 +29,33 @@ public final class AvionSingleton {
     
     // ------------------------------------- Metodos -------------------------------------
     
+    public static int getAsientos(){
+        return asientos;
+    }
+    
     /**
      * anula N numero de billetes o todos los posibles.
      * @param billetesEliminar indica el numero de billetes a eliminar
      * @return -1 si no hay billetes que anular o el valor pasado es negativo<p>
-     * 1 si elimina todos los billetes pasados por parametro
+     * 0 si elimina todos los billetes pasados por parametro
      * n si elimina al menos 1 billete 
      * n -> numero de billetes eliminados
      */
-    public int anularVuelos(int billetesEliminar){
-        if(asientos == 0 || billetesEliminar < 0)
+    protected int anularVuelos(int billetesEliminar){
+        if(asientos == ASIENTOS_MAXIMOS || billetesEliminar < 0)
             return -1;
         
         // Si quiere cancelar mas billetes de los que se pueden
         // elimina todos los posibles
-        int aux = asientos;
-        asientos += billetesEliminar;
         
-        if(asientos > 180){
-            asientos = 180;
-        }else
+        int aux;
+        if(billetesEliminar > (ASIENTOS_MAXIMOS -asientos)){ // Si quiere eliminar mas billetes de los restantes
+            aux = ASIENTOS_MAXIMOS - asientos;
+            asientos = ASIENTOS_MAXIMOS;
+        }else{  // Si quiere eliminar menos o los que quedan
+            asientos += billetesEliminar;
             aux = 0;
-            
-             
+        }
         
         return aux;
     }
@@ -60,11 +65,11 @@ public final class AvionSingleton {
      * @param billetesComprar  indica el numero de billetes a comprar
      * @return -1 si no hay billetes que comprar o el valor pasado es negativo<br>
      * 0 si compra la cantidad de billetes pasada por parametro
-     * n si compra menos de la cantidad pasada por parametro<br>
+     * n si compra menos de la cantidad pasada por parametro (no hay suficientes)<br>
      * n -> numero de billetes comprados
      */
-    public int comprarVuelos(int billetesComprar){
-        if(asientos == 180 || billetesComprar < 0)
+    protected int comprarVuelos(int billetesComprar){
+        if(asientos == 0 || billetesComprar < 0)
             return -1;
         
         int aux;
